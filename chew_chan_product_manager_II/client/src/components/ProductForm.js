@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const ProductForm = (props) =>{
+    const { product,setProduct}=props;
     const [title,setTitle] = useState("");
     const [price,setPrice] = useState("");
     const [description, setDescription] = useState("");
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const submitHandler = (e) =>{
         e.preventDefault();
@@ -15,16 +16,17 @@ const ProductForm = (props) =>{
         axios.post("http://localhost:8000/api/products/create",{
             title,
             price,
-            description
+            description,
         })
         .then((res)=>{
             console.log(res);
             console.log(res.data);
+            setProduct([...product, res.data]);
             setTitle("");
             setPrice("");
             setDescription("");
 
-            navigate('/list');
+            // navigate('/');
         })
         .catch((err)=>{
             console.log(err);
